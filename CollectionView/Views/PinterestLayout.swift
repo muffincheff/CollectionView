@@ -30,7 +30,7 @@
 
 import UIKit
 
-protocol PinterestLayoutDelegate: class {
+protocol PinterestLayoutDelegate: AnyObject {
     // 1. Method to ask the delegate for the height of the image
     func collectionView(_ collectionView:UICollectionView, heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat
 }
@@ -58,6 +58,7 @@ class PinterestLayout: UICollectionViewLayout {
     }
     
     override var collectionViewContentSize: CGSize {
+        //print("PinterestLayout::collectionViewContentSize")
         return CGSize(width: contentWidth, height: contentHeight)
     }
     
@@ -66,7 +67,11 @@ class PinterestLayout: UICollectionViewLayout {
         guard cache.isEmpty == true, let collectionView = collectionView else {
             return
         }
+        
+        //print("PinterestLayout::prepare")
+        
         // 2. Pre-Calculates the X Offset for every column and adds an array to increment the currently max Y Offset for each column
+        // 2. 모든 열에 대한 X 오프셋을 미리 계산하고 각 열에 대해 현재 최대 Y 오프셋을 증가시키기 위해 배열을 추가합니다
         let columnWidth = contentWidth / CGFloat(numberOfColumns)
         var xOffset = [CGFloat]()
         for column in 0 ..< numberOfColumns {
@@ -76,45 +81,59 @@ class PinterestLayout: UICollectionViewLayout {
         var yOffset = [CGFloat](repeating: 0, count: numberOfColumns)
         
         // 3. Iterates through the list of items in the first section
+        // 3. 첫 번째 섹션의 항목 목록을 반복합니다.
+        var i = 0
         for item in 0 ..< collectionView.numberOfItems(inSection: 0) {
             
             let indexPath = IndexPath(item: item, section: 0)
             
             // 4. Asks the delegate for the height of the picture and the annotation and calculates the cell frame.
+            // 4. 대리인에게 그림의 높이와 주석을 요청하고 셀 프레임을 계산합니다.
             let photoHeight = delegate.collectionView(collectionView, heightForPhotoAtIndexPath: indexPath)
             let height = cellPadding * 2 + photoHeight
             let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth, height: height)
             let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
             
             // 5. Creates an UICollectionViewLayoutItem with the frame and add it to the cache
+            // 5. 프레임이있는 UICollectionViewLayoutItem을 만들어 캐시에 추가합니다.
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             attributes.frame = insetFrame
             cache.append(attributes)
             
             // 6. Updates the collection view content height
+            // 6. 컬렉션 뷰 컨텐츠 높이를 업데이트합니다
             contentHeight = max(contentHeight, frame.maxY)
             yOffset[column] = yOffset[column] + height
             
             column = column < (numberOfColumns - 1) ? (column + 1) : 0
+            
+            //print("PinterestLayout::prepare - item count in first section : \(i)")
+            i += 1
         }
+        
+        i = 0
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
+        //print("PinterestLayout::layoutAttributesForElements")
         var visibleLayoutAttributes = [UICollectionViewLayoutAttributes]()
         
         // Loop through the cache and look for items in the rect
         for attributes in cache {
             if attributes.frame.intersects(rect) {
+//                print("PinterestLayout::layoutAttributesForElements - intersect!")
                 visibleLayoutAttributes.append(attributes)
             }
         }
         return visibleLayoutAttributes
     }
-    
+
+    /*
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        //print("PinterestLayout::layoutAttributesForItem")
         return cache[indexPath.item]
     }
-    
+    */
 }
 

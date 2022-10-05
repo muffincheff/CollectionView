@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>49114961321-atfqimq6o76gr8h56qhbv04b1ga026h9.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.49114961321-atfqimq6o76gr8h56qhbv04b1ga026h9</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB1sam1GOtQJnzPR7pkSCwHxRiUxalFoE0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>49114961321</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.CollectionView1010101010</string>
+	<key>PROJECT_ID</key>
+	<string>colloctionview</string>
+	<key>STORAGE_BUCKET</key>
+	<string>colloctionview.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:49114961321:ios:b3a4191a16096905b520b8</string>
+	<key>DATABASE_URL</key>
+	<string>https://colloctionview.firebaseio.com</string>
+</dict>
+</plist>
